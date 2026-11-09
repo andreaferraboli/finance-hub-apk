@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Banca Demo IT - Accesso con telefono</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body>
+  <header class="top"><span class="brand">Banca Demo IT</span><span class="demo-tag">DEMO</span></header>
+  <main>
+    <div class="login-box panel">
+      <h1>Accedi con il numero di telefono</h1>
+      <div class="notice">Portale finto: per provare la compilazione assistita di Finanz. Il PIN non viene mai compilato dall'app.</div>
+      <form id="phone-login" autocomplete="on">
+        <label for="given">Nome</label>
+        <input id="given" name="firstName" type="text" autocomplete="given-name">
+        <label for="family">Cognome</label>
+        <input id="family" name="lastName" type="text" autocomplete="family-name">
+        <label for="birth">Data di nascita</label>
+        <input id="birth" name="birthDate" type="text" placeholder="gg/mm/aaaa">
+        <label for="phone">Numero di cellulare</label>
+        <div class="phone-row">
+          <select id="prefix" name="prefix" aria-label="Prefisso"><option value="39" selected>+39</option><option value="41">+41</option></select>
+          <input id="phone" name="phone" type="tel" inputmode="tel">
+        </div>
+        <label for="mail">Email</label>
+        <input id="mail" name="email" type="email" autocomplete="email">
+        <label for="pin">PIN</label>
+        <input id="pin" name="pin" type="password" inputmode="numeric" autocomplete="current-password">
+        <button type="submit">Continua</button>
+        <div class="error" id="phone-error"></div>
+      </form>
+    </div>
+  </main>
+  <script>
+    document.getElementById('phone-login').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!document.getElementById('phone').value || !document.getElementById('pin').value) {
+        document.getElementById('phone-error').textContent = 'Inserisci numero e PIN.';
+        return;
+      }
+      localStorage.setItem('demo_stage', 'otp');
+      location.href = 'otp.html';
+    });
+  </script>
+</body>
+</html>

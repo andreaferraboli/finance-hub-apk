@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Banca Demo IT - Conti</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body>
+  <header class="top"><span class="brand">Banca Demo IT</span><span class="demo-tag">DEMO</span></header>
+  <nav class="menu"></nav>
+  <main>
+    <h1>I tuoi conti</h1>
+    <div class="notice">Dati inventati: Banca Demo IT non esiste.</div>
+
+    <section class="account-card">
+      <div class="name">Conto Corrente Demo</div>
+      <div class="meta">IBAN IT60 X054 2811 1010 0000 0123 456</div>
+      <div class="row"><span>Saldo contabile</span><strong>12.480,35 €</strong></div>
+      <div class="row"><span>Saldo disponibile</span><strong>12.230,35 €</strong></div>
+      <a href="movimenti.html">Vedi movimenti</a>
+    </section>
+
+    <section class="account-card">
+      <div class="name">Carta Prepagata Demo</div>
+      <div class="meta">Visa prepagata •••• 4242</div>
+      <div class="row"><span>Saldo disponibile</span><strong>320,50 €</strong></div>
+    </section>
+
+    <section class="account-card">
+      <div class="name">Conto Deposito Demo</div>
+      <div class="meta">Tasso 3,00% lordo annuo, vincolo 12 mesi</div>
+      <div class="row"><span>Saldo contabile</span><strong>25.000,00 €</strong></div>
+    </section>
+
+    <h2>Operazioni</h2>
+    <div class="actions">
+      <button type="button" onclick="location.href='bonifico.html'">Bonifico</button>
+      <button type="button" class="secondary" onclick="alert('Ricarica non disponibile nella demo')">Ricarica carta</button>
+      <button type="button" class="secondary" onclick="location.href='portafoglio.html'">Vai al portafoglio</button>
+    </div>
+  </main>
+</body>
+</html>

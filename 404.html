@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script>
+        // Routing SPA su GitHub Pages: una rotta profonda (es. /finance-hub-apk/settings)
+        // non esiste come file e Pages serve questa pagina. Salviamo il percorso completo
+        // e torniamo alla radice del sito; index.html lo ripristina e il router lo gestisce.
+        // La base e il primo segmento del path (il nome del repo), cosi la pagina non
+        // dipende da come si chiama il repo che ospita il sito.
+        // Niente `const location` a livello globale: window.location non si puo
+        // ridichiarare e lo script andava in SyntaxError (era cosi anche prima).
+        (function () {
+            var loc = window.location;
+            var pathSegments = loc.pathname.split('/').filter(Boolean);
+            var base = pathSegments.length ? '/' + pathSegments[0] + '/' : '/';
+
+            if (pathSegments.length > 1) {
+                sessionStorage.setItem('spa-redirect', loc.pathname + loc.search + loc.hash);
+            }
+            loc.replace(loc.origin + base);
+        })();
+    </script>
+</head>
+
+<body>
+    <p>Redirecting...</p>
+</body>
+
+</html>

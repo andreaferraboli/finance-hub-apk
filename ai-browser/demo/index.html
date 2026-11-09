@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Banca Demo IT - Accedi</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body>
+  <header class="top"><span class="brand">Banca Demo IT</span><span class="demo-tag">DEMO</span></header>
+  <main>
+    <div class="login-box panel">
+      <h1>Accedi all'home banking</h1>
+      <div class="notice">Portale finto per provare Finanz: usa qualsiasi codice cliente e password. Il codice OTP è 123456.</div>
+      <form id="login" autocomplete="off">
+        <label for="user">Codice cliente</label>
+        <input id="user" name="user" type="text" autocomplete="username" required>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button type="submit">Accedi</button>
+        <div class="error" id="login-error"></div>
+      </form>
+      <p><a href="accesso-telefono.html">Accedi con il numero di telefono</a></p>
+    </div>
+  </main>
+  <script>
+    if (localStorage.getItem('demo_auth') === '1') location.replace('dashboard.html');
+    document.getElementById('login').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var user = document.getElementById('user').value.trim();
+      var pass = document.getElementById('password').value;
+      if (!user || !pass) {
+        document.getElementById('login-error').textContent = 'Inserisci codice cliente e password.';
+        return;
+      }
+      localStorage.setItem('demo_stage', 'otp');
+      location.href = 'otp.html';
+    });
+  </script>
+</body>
+</html>

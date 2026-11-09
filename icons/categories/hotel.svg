@@ -1,0 +1,13 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M21 44.5H5.5C4.94772 44.5 4.5 44.0523 4.5 43.5V36M21 44.5V33C21 32.4477 21.4477 32 22 32H27C27.5523 32 28 32.4477 28 33V37M21 44.5H28M28 44.5H31.5C32.0523 44.5 32.5 44.0523 32.5 43.5V19V4C32.5 3.44772 32.0523 3 31.5 3H5.5C4.94772 3 4.5 3.44771 4.5 4V31M28 44.5V42" stroke="#FAFAF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M36 3V6M36 9V6M36 6H40M40 6V3M40 6V9" stroke="#FAFAF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="38" cy="15" rx="2" ry="3" stroke="#FAFAF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M38 26.5V21.5M38 21.5H40.5M38 21.5H35.5" stroke="#FAFAF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M39 35.5H37C36.4477 35.5 36 35.0523 36 34.5V32.5M36 32.5V30.5C36 29.9477 36.4477 29.5 37 29.5H39M36 32.5H39" stroke="#FAFAF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M37 39V43C37 43.5523 37.4477 44 38 44H40" stroke="#FAFAF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="9.5" y="7" width="6" height="6" rx="1" stroke="#FAFAF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="21.5" y="7" width="6" height="6" rx="1" stroke="#FAFAF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="21.5" y="19.5" width="6" height="6" rx="1" stroke="#FAFAF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="9.5" y="19.5" width="6" height="6" rx="1" stroke="#FAFAF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="9.5" y="32" width="6" height="6" rx="1" stroke="#FAFAF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

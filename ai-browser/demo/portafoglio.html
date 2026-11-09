@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Banca Demo IT - Portafoglio</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body>
+  <header class="top"><span class="brand">Banca Demo IT</span><span class="demo-tag">DEMO</span></header>
+  <nav class="menu"></nav>
+  <main>
+    <h1>Portafoglio · Dossier Titoli Demo</h1>
+    <section class="account-card">
+      <div class="name">Dossier Titoli Demo</div>
+      <div class="meta">Deposito titoli n. •••• 7781</div>
+      <div class="row"><span>Valore totale</span><strong>18.234,50 €</strong></div>
+      <div class="row"><span>Utile/perdita</span><strong class="pos">+1.484,50 €</strong></div>
+    </section>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Strumento</th><th>ISIN</th><th class="num">Quantità</th><th class="num">Prezzo</th><th class="num">Valore</th><th class="num">P/L</th><th></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>iShares Core MSCI World UCITS ETF</td><td>IE00B4L5Y983</td><td class="num">120</td><td class="num">98,45 €</td><td class="num">11.814,00 €</td><td class="num pos">+1.214,00 €</td><td><button type="button" class="secondary" onclick="alert('Demo')">Compra</button> <button type="button" class="danger" onclick="alert('Demo')">Vendi</button></td></tr>
+          <tr><td>Vanguard FTSE All-World UCITS ETF</td><td>IE00BK5BQT80</td><td class="num">25</td><td class="num">118,20 €</td><td class="num">2.955,00 €</td><td class="num pos">+205,00 €</td><td><button type="button" class="secondary" onclick="alert('Demo')">Compra</button> <button type="button" class="danger" onclick="alert('Demo')">Vendi</button></td></tr>
+          <tr><td>Enel S.p.A.</td><td>IT0003128367</td><td class="num">300</td><td class="num">6,85 €</td><td class="num">2.055,00 €</td><td class="num neg">-45,00 €</td><td><button type="button" class="secondary" onclick="alert('Demo')">Compra</button> <button type="button" class="danger" onclick="alert('Demo')">Vendi</button></td></tr>
+          <tr><td>BTP Demo 2028 3,4%</td><td>IT0005547408</td><td class="num">10</td><td class="num">101,30 €</td><td class="num">1.013,00 €</td><td class="num pos">+13,00 €</td><td><button type="button" class="secondary" onclick="alert('Demo')">Compra</button> <button type="button" class="danger" onclick="alert('Demo')">Vendi</button></td></tr>
+          <tr><td>Bitcoin ETP Demo</td><td>CH0454664001</td><td class="num">15</td><td class="num">26,50 €</td><td class="num">397,50 €</td><td class="num pos">+97,50 €</td><td><button type="button" class="secondary" onclick="alert('Demo')">Compra</button> <button type="button" class="danger" onclick="alert('Demo')">Vendi</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>

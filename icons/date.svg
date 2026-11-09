@@ -1,0 +1,12 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 5C3 4.44772 3.44772 4 4 4H20C20.5523 4 21 4.44772 21 5V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V5Z" stroke="#A4B7B1" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.5 8.5H15M20.5 8.5H18.25" stroke="#A4B7B1" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="8.5" y1="2.5" x2="8.5" y2="5.5" stroke="#A4B7B1" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="15.5" y1="2.5" x2="15.5" y2="5.5" stroke="#A4B7B1" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="16" y="16.5" width="3" height="3" stroke="#A4B7B1" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="10.5" y="16.5" width="3" height="3" stroke="#A4B7B1" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="5" y="16.5" width="3" height="3" stroke="#A4B7B1" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="16" y="11.5" width="3" height="3" stroke="#A4B7B1" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="10.5" y="11.5" width="3" height="3" stroke="#A4B7B1" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="5" y="11.5" width="3" height="3" stroke="#A4B7B1" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Banca Demo IT - Movimenti carta</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body>
+  <header class="top"><span class="brand">Banca Demo IT</span><span class="demo-tag">DEMO</span></header>
+  <nav class="menu"></nav>
+  <main>
+    <h1>Movimenti · Carta Prepagata Demo</h1>
+    <div id="content"><div class="loading">Caricamento movimenti...</div></div>
+  </main>
+  <script>
+    // Movimenti inventati della carta. L'importo non ha segno: la classe
+    // dice se e' un'uscita (out) o un'entrata (in). "Carica altri" aggiunge
+    // righe nella stessa pagina.
+    var CARD = [
+      ['12/10/2026', 'Supermercato Demo', '18,40 €', 'out'],
+      ['11/10/2026', 'Libreria Centrale', '22,90 €', 'out'],
+      ['09/10/2026', 'Ricarica da Conto Corrente Demo', '200,00 €', 'in'],
+      ['08/10/2026', 'Parcheggio Demo', '3,50 €', 'out'],
+      ['06/10/2026', 'Farmacia Demo', '12,75 €', 'out'],
+      ['04/10/2026', 'Bar Stazione', '2,80 €', 'out'],
+      ['02/10/2026', 'Abbonamento Musica Demo', '10,99 €', 'out'],
+      ['30/09/2026', 'Rimborso Negozio Demo', '15,00 €', 'in'],
+      ['27/09/2026', 'Cinema Demo', '9,50 €', 'out'],
+      ['25/09/2026', 'Panetteria Demo', '4,20 €', 'out'],
+      ['22/09/2026', 'Taxi Demo', '16,30 €', 'out'],
+      ['19/09/2026', 'Ricarica da Conto Corrente Demo', '100,00 €', 'in'],
+      ['15/09/2026', 'Edicola Demo', '2,50 €', 'out'],
+      ['10/09/2026', 'Ristorante Demo', '34,00 €', 'out']
+    ];
+    var STEP = 6;
+    var shown = 0;
+    function li(m) {
+      return '<li class="tx"><div><div class="tx-desc">' + m[1] + '</div><div class="tx-date">' + m[0] +
+        '</div></div><div class="tx-amount ' + m[3] + '">' + m[2] + '</div></li>';
+    }
+    function more() {
+      var next = CARD.slice(shown, shown + STEP);
+      shown += next.length;
+      document.getElementById('list').insertAdjacentHTML('beforeend', next.map(li).join(''));
+      if (shown >= CARD.length) document.getElementById('more').remove();
+    }
+    setTimeout(function () {
+      document.getElementById('content').innerHTML =
+        '<ul class="tx-list" id="list"></ul><div class="actions"><button type="button" class="secondary" id="more">Carica altri</button></div>';
+      document.getElementById('more').addEventListener('click', more);
+      more();
+    }, 700);
+  </script>
+</body>
+</html>

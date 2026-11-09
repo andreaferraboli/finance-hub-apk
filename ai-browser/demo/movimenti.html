@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Banca Demo IT - Movimenti</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body>
+  <header class="top"><span class="brand">Banca Demo IT</span><span class="demo-tag">DEMO</span></header>
+  <nav class="menu"></nav>
+  <main>
+    <h1>Movimenti · Conto Corrente Demo</h1>
+    <div id="content"><div class="loading">Caricamento movimenti...</div></div>
+  </main>
+  <script>
+    // Movimenti inventati. Le pagine si caricano in ritardo per simulare un
+    // portale dinamico (contenuto aggiunto via JS dopo il caricamento).
+    var MOVEMENTS = [
+      ['13/10/2026', 'Pagamento POS Esselunga Milano', 'Spesa', '-64,20', 'In attesa'],
+      ['12/10/2026', 'Bar Centrale - Caffè', 'Ristoranti', '-1,50', 'Contabilizzato'],
+      ['12/10/2026', 'Bar Centrale - Caffè', 'Ristoranti', '-1,50', 'Contabilizzato'],
+      ['11/10/2026', 'Addebito SDD Energia Demo Spa', 'Utenze', '-78,40', 'Contabilizzato'],
+      ['10/10/2026', 'Bonifico a favore di Mario Rossi - Affitto ottobre', 'Casa', '-850,00', 'Contabilizzato'],
+      ['09/10/2026', 'Pagamento POS Farmacia San Marco', 'Salute', '-23,90', 'Contabilizzato'],
+      ['08/10/2026', 'Prelievo ATM Banca Demo', 'Contanti', '-100,00', 'Contabilizzato'],
+      ['07/10/2026', 'Abbonamento Streaming Demo', 'Svago', '-12,99', 'Contabilizzato'],
+      ['05/10/2026', 'Rimborso spese - Azienda Demo Srl', 'Entrate', '+142,30', 'Contabilizzato'],
+      ['03/10/2026', 'Pagamento POS Benzinaio Demo', 'Trasporti', '-55,00', 'Contabilizzato'],
+      ['02/10/2026', 'Ricarica Carta Prepagata Demo', 'Trasferimenti', '-200,00', 'Contabilizzato'],
+      ['01/10/2026', 'Commissione tenuta conto', 'Banca', '-2,00', 'Contabilizzato'],
+      ['30/09/2026', 'Accredito stipendio settembre - Azienda Demo Srl', 'Entrate', '+2.350,00', 'Contabilizzato'],
+      ['28/09/2026', 'Pagamento POS Ristorante Da Gino', 'Ristoranti', '-48,50', 'Contabilizzato'],
+      ['26/09/2026', 'Addebito SDD Telefonia Demo', 'Utenze', '-24,99', 'Contabilizzato'],
+      ['24/09/2026', 'Pagamento online Libreria Demo', 'Svago', '-31,80', 'Contabilizzato'],
+      ['22/09/2026', 'Pagamento POS Esselunga Milano', 'Spesa', '-87,15', 'Contabilizzato'],
+      ['20/09/2026', 'Bonifico da Lucia Bianchi - Regalo', 'Entrate', '+50,00', 'Contabilizzato'],
+      ['18/09/2026', 'Pagamento POS Palestra Demo', 'Sport', '-45,00', 'Contabilizzato'],
+      ['15/09/2026', 'Addebito rata assicurazione auto', 'Assicurazioni', '-62,70', 'Contabilizzato'],
+      ['12/09/2026', 'Pagamento POS Cinema Demo', 'Svago', '-18,00', 'Contabilizzato'],
+      ['10/09/2026', 'Bonifico a favore di Mario Rossi - Affitto settembre', 'Casa', '-850,00', 'Contabilizzato'],
+      ['05/09/2026', 'Pagamento POS Esselunga Milano', 'Spesa', '-71,35', 'Contabilizzato'],
+      ['01/09/2026', 'Commissione tenuta conto', 'Banca', '-2,00', 'Contabilizzato']
+    ];
+    var PER_PAGE = 12;
+    var params = new URLSearchParams(location.search);
+    var current = Math.max(1, parseInt(params.get('p') || '1', 10));
+    var pages = Math.ceil(MOVEMENTS.length / PER_PAGE);
+    if (current > pages) current = pages;
+
+    function row(m) {
+      var cls = m[3].charAt(0) === '-' ? 'neg' : 'pos';
+      var status = m[4] === 'In attesa' ? '<span class="pending">In attesa</span>' : m[4];
+      return '<tr><td>' + m[0] + '</td><td>' + m[1] + '</td><td>' + m[2] +
+        '</td><td class="num ' + cls + '">' + m[3] + ' €</td><td>' + status + '</td></tr>';
+    }
+
+    setTimeout(function () {
+      var slice = MOVEMENTS.slice((current - 1) * PER_PAGE, current * PER_PAGE);
+      var html = '<div class="table-wrap"><table><thead><tr>' +
+        '<th>Data</th><th>Descrizione</th><th>Categoria</th><th class="num">Importo</th><th>Stato</th>' +
+        '</tr></thead><tbody>' + slice.map(row).join('') + '</tbody></table></div>';
+      html += '<div class="pager">';
+      html += current > 1 ? '<a href="movimenti.html?p=' + (current - 1) + '">Pagina precedente</a>' : '<span></span>';
+      html += '<span>Pagina ' + current + ' di ' + pages + '</span>';
+      html += current < pages ? '<a href="movimenti.html?p=' + (current + 1) + '">Pagina successiva</a>' : '<span></span>';
+      html += '</div>';
+      document.getElementById('content').innerHTML = html;
+    }, 900);
+  </script>
+</body>
+</html>
