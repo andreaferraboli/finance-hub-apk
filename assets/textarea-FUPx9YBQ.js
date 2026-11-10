@@ -1,1 +1,0 @@
-import{r,j as t,E as x,ec as l}from"./index-BI_PCopy.js";const o=r.forwardRef(({className:a,...e},s)=>t.jsx("textarea",{"data-slot":"textarea",className:x(l,"flex min-h-[88px] py-2.5 leading-relaxed",a),ref:s,...e}));o.displayName="Textarea";export{o as T};
