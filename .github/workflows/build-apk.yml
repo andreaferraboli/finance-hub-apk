@@ -1,0 +1,138 @@
+name: Build APK & Release
+
+# Build dell'APK di Finance Hub dal repo privato andreaferraboli/finance-hub e
+# release qui, su finance-hub-apk (repo pubblico: Actions gratuito).
+# L'app scarica l'aggiornamento da
+#   https://github.com/andreaferraboli/finance-hub-apk/releases/latest/download/app-release.apk
+# quindi la release deve essere l'ultima pubblicata e l'asset deve chiamarsi app-release.apk.
+#
+# Uso: gh workflow run build-apk.yml --repo andreaferraboli/finance-hub-apk -f version=X.Y.Z [-f ref=main]
+# appConfig/version (aggiornamento in-app e versioni minime) NON si scrive da qui:
+# si lancia scripts/ci/update-app-config.mjs dal server dopo che la release e' pubblicata.
+#
+# Repo pubblico: i log sono pubblici. Niente echo di password, keystore o file di configurazione.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versione da rilasciare (X.Y.Z): deve coincidere con package.json del ref'
+        required: true
+        type: string
+      ref:
+        description: 'Branch, tag o sha di andreaferraboli/finance-hub'
+        required: true
+        default: main
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-apk
+  cancel-in-progress: false
+
+env:
+  # Certificato di firma degli APK pubblicati finora (SHA-256, dato pubblico): se cambia,
+  # Android rifiuta l'aggiornamento sopra l'app installata.
+  EXPECTED_CERT_SHA256: da6f0f502700d7df394b7946cbb6ffeb02f1ad8f30695c5867e3ca6407865259
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del codice (repo privato, deploy key in sola lettura)
+        uses: actions/checkout@v5
+        with:
+          repository: andreaferraboli/finance-hub
+          ref: ${{ inputs.ref }}
+          ssh-key: ${{ secrets.FINANCE_HUB_DEPLOY_KEY }}
+          persist-credentials: false
+
+      - name: Versione e versionCode
+        id: ver
+        # Formula del versionCode: MAJOR*10000 + MINOR*100 + PATCH, identica a
+        # scripts/ci/version-code.mjs e ad android/app/build.gradle del repo privato.
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [ "$VERSION" != "$INPUT_VERSION" ]; then
+            echo "::error::package.json del ref dice $VERSION, richiesta $INPUT_VERSION"
+            exit 1
+          fi
+          IFS='.' read -r -a P <<< "$VERSION"
+          CODE=$(( ${P[0]} * 10000 + ${P[1]} * 100 + ${P[2]} ))
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+          echo "code=$CODE" >> "$GITHUB_OUTPUT"
+          echo "Versione $VERSION, versionCode $CODE, commit $(git rev-parse --short HEAD)"
+
+      - name: La release non deve esistere
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.ver.outputs.tag }}
+        run: |
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "::error::La release $TAG esiste gia' su $GITHUB_REPOSITORY: alza la versione."
+            exit 1
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Installa dipendenze
+        run: npm ci
+
+      - name: Build web per Android
+        run: npm run build:android
+        env:
+          # URL pubblico del proxy Claude (variabile del repo, non un segreto).
+          VITE_CLAUDE_PROXY_URL: ${{ vars.VITE_CLAUDE_PROXY_URL }}
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Build APK Release
+        run: |
+          chmod +x android/gradlew
+          cd android && ./gradlew assembleRelease
+
+      - name: Controlla firma e versione dell'APK
+        env:
+          CODE: ${{ steps.ver.outputs.code }}
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          APK=android/app/build/outputs/apk/release/app-release.apk
+          test -f "$APK" || { echo "::error::APK firmato non trovato (manca la configurazione di firma?)"; exit 1; }
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          CERT=$("$BT/apksigner" verify --print-certs "$APK" | sed -n 's/^Signer #1 certificate SHA-256 digest: //p')
+          echo "Certificato di firma: $CERT"
+          [ "$CERT" = "$EXPECTED_CERT_SHA256" ] || { echo "::error::certificato di firma diverso da quello degli APK pubblicati"; exit 1; }
+          BADGING=$("$BT/aapt2" dump badging "$APK" | head -1)
+          echo "$BADGING"
+          echo "$BADGING" | grep -q "versionCode='$CODE'" || { echo "::error::versionCode diverso da $CODE"; exit 1; }
+          echo "$BADGING" | grep -q "versionName='$VERSION'" || { echo "::error::versionName diverso da $VERSION"; exit 1; }
+
+      - name: Crea la GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.ver.outputs.tag }}
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          gh release create "$TAG" \
+            android/app/build/outputs/apk/release/app-release.apk \
+            --title "$TAG" \
+            --notes "Release $VERSION" \
+            --latest \
+            --repo "$GITHUB_REPOSITORY"
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json publishedAt,assets --jq '{publishedAt, assets: [.assets[] | {name, size}]}'
