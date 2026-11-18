@@ -1,0 +1,1 @@
+import{r as t,j as r,E as x,ft as l}from"./index-Dph3IkW8.js";const o=t.forwardRef(({className:a,...e},s)=>r.jsx("textarea",{"data-slot":"textarea",className:x(l,"flex min-h-[88px] py-2.5 leading-relaxed",a),ref:s,...e}));o.displayName="Textarea";export{o as T};
