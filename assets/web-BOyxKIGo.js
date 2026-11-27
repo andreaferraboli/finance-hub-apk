@@ -1,0 +1,1 @@
+import{fW as r}from"./index-D2ienF_9.js";class e extends r{async openFile(o){if(!o.blob)throw new Error(e.ERROR_BLOB_MISSING);const b=URL.createObjectURL(o.blob);window.open(b,"_blank")}}e.ERROR_BLOB_MISSING="blob must be provided.";export{e as FileOpenerWeb};
